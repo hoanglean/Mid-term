@@ -1,0 +1,19 @@
+<div class="page-container">
+  <div class="card error-card">
+    <div class="error-badge">Lỗi Hệ Thống</div>
+    <h2 class="error-title">{{#if title}}{{title}}{{else}}Đã Có Lỗi Xảy Ra{{/if}}</h2>
+    <p class="error-message">{{message}}</p>
+
+    {{#if error}}
+      <div class="error-details">
+        <code>{{error}}</code>
+      </div>
+    {{/if}}
+
+    <div class="error-actions">
+      <a href="/" class="btn btn-primary">
+        Quay về Trang Chủ
+      </a>
+    </div>
+  </div>
+</div>
