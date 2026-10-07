@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{title}}</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <!-- Header / Navigation Bar -->
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="brand-group">
+        <h1 class="brand-title">CloudBook System</h1>
+        <span class="brand-divider">/</span>
+        <span class="brand-sub">DB_23IT003</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Body Content -->
+  <main class="main-content">
+    {{{body}}}
+  </main>
+
+  <!-- Footer Bắt Buộc Theo Đề Thi -->
+  <footer class="app-footer">
+    <div class="footer-primary-text">
+      Họ tên: {{appMetadata.studentName}} | MSSV: {{appMetadata.studentId}} | Mức VAT áp dụng: {{appMetadata.vatRate}}%
+    </div>
+  </footer>
+</body>
+</html>

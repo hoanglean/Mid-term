@@ -1,0 +1,489 @@
+/* ==========================================================================
+   CloudBook System - Giao diện Tối giản (Nền Trắng - Chữ Đen)
+   Sinh viên: Hoàng Lê An | MSSV: 23IT003 | Database: DB_23IT003
+   ========================================================================== */
+
+:root {
+  --bg-main: #ffffff;
+  --bg-card: #ffffff;
+  --bg-subtle: #f9fafb;
+  --bg-input: #ffffff;
+  
+  --border: #e5e7eb;
+  --border-dark: #111827;
+
+  --text-main: #111827;
+  --text-muted: #4b5563;
+  --text-dim: #6b7280;
+
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', Consolas, monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   1. NAVBAR
+   ========================================================================== */
+.navbar {
+  background-color: #ffffff;
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 1rem 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.brand-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.brand-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.brand-divider {
+  color: var(--text-dim);
+}
+
+.brand-sub {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.status-badges {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.badge {
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+}
+
+.badge strong {
+  color: var(--text-main);
+}
+
+/* ==========================================================================
+   2. MAIN CONTENT & GRID
+   ========================================================================== */
+.main-content {
+  flex: 1;
+  max-width: 1300px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1.75rem 1.25rem;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ==========================================================================
+   3. STATS CARDS
+   ========================================================================== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.stat-card {
+  background-color: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem 1.25rem;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 0.35rem;
+  font-weight: 500;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.stat-desc {
+  margin-top: 0.35rem;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+.stat-mono {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   4. CONTENT GRID (FORM & TABLE)
+   ========================================================================== */
+.content-grid {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+@media (max-width: 992px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  background-color: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.card-header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--bg-subtle);
+}
+
+.card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.card-subtitle {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  display: block;
+}
+
+.pill {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text-main);
+  background: #ffffff;
+}
+
+/* ==========================================================================
+   5. FORM
+   ========================================================================== */
+.book-form {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.col-half {
+  flex: 1;
+}
+
+.form-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-main);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.required {
+  color: #dc2626;
+}
+
+.hint-text {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  font-weight: 400;
+}
+
+.form-control {
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.88rem;
+  color: var(--text-main);
+  font-family: inherit;
+  width: 100%;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #111827;
+  box-shadow: 0 0 0 1px #111827;
+}
+
+/* Khối xem trước tính VAT */
+.vat-calculator-box {
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.75rem;
+  font-size: 0.82rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.vat-calc-title {
+  color: var(--text-main);
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.vat-calc-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.vat-calc-item {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-muted);
+}
+
+.vat-calc-divider {
+  height: 1px;
+  background-color: var(--border);
+  margin: 0.2rem 0;
+}
+
+.vat-calc-item.total {
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+/* Nút Bấm Đen Chữ Trắng */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem 1rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background-color 0.15s ease;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background-color: #111827;
+  color: #ffffff;
+  border-color: #111827;
+}
+
+.btn-primary:hover {
+  background-color: #374151;
+}
+
+/* ==========================================================================
+   6. TABLE
+   ========================================================================== */
+.table-responsive {
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  text-align: left;
+}
+
+.data-table th {
+  background-color: var(--bg-subtle);
+  padding: 0.75rem 1rem;
+  color: var(--text-main);
+  font-weight: 600;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.data-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-main);
+  vertical-align: middle;
+}
+
+.data-table tr:hover td {
+  background-color: #f9fafb;
+}
+
+code {
+  font-family: var(--font-mono);
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--border);
+  padding: 0.15rem 0.35rem;
+  border-radius: 3px;
+  font-size: 0.8rem;
+  color: #111827;
+}
+
+.text-date {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
+.empty-state {
+  padding: 3rem 1.5rem;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* ==========================================================================
+   7. ALERTS
+   ========================================================================== */
+.alert {
+  border-radius: 4px;
+  padding: 0.8rem 1rem;
+  font-size: 0.85rem;
+}
+
+.alert-success {
+  background-color: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #166534;
+}
+
+.alert-danger {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+}
+
+/* ==========================================================================
+   8. FOOTER
+   ========================================================================== */
+.app-footer {
+  margin-top: auto;
+  background-color: var(--bg-subtle);
+  border-top: 1px solid var(--border);
+  padding: 1.25rem 1rem;
+  text-align: center;
+}
+
+.footer-container {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.footer-primary-text {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.footer-secondary-text {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
+/* ==========================================================================
+   9. ERROR PAGE
+   ========================================================================== */
+.error-card {
+  max-width: 500px;
+  margin: 3rem auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.error-badge {
+  display: inline-block;
+  background-color: #fee2e2;
+  border: 1px solid #fca5a5;
+  color: #991b1b;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.error-title {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  color: #111827;
+}
+
+.error-message {
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.error-details {
+  background-color: #f9fafb;
+  border: 1px solid var(--border);
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+  font-size: 0.8rem;
+  text-align: left;
+  overflow-x: auto;
+}

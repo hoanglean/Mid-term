@@ -1,0 +1,197 @@
+<div class="page-container">
+
+  <!-- Thông báo Flash & Lỗi HTTP 400 -->
+  {{#if flash}}
+    <div class="alert alert-success">
+      <div class="alert-content">
+        <strong>Thành công:</strong> {{flash.message}}
+      </div>
+    </div>
+  {{/if}}
+
+  {{#if error}}
+    <div class="alert alert-danger" id="error-alert">
+      <div class="alert-content">
+        <strong>Lỗi HTTP 400:</strong> {{error}}
+      </div>
+    </div>
+  {{/if}}
+
+  <!-- Phần chính: Form Nhập Liệu & Danh Sách Sách -->
+  <div class="content-grid">
+    <!-- Cột 1: Form Thêm Sách Mới -->
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">Thêm Sách Mới</h2>
+      </div>
+
+      <form action="/books" method="POST" id="bookForm" class="book-form">
+        <!-- Mã sách -->
+        <div class="form-group">
+          <label for="bookCode" class="form-label">
+            Mã sách <span class="required">*</span>
+            <span class="hint-text">(Bắt đầu bằng "{{student.bookPrefix}}")</span>
+          </label>
+          <input 
+            type="text" 
+            id="bookCode" 
+            name="bookCode" 
+            class="form-control" 
+            placeholder="VD: 003-CSDL, 003-NODEJS, 00399" 
+            value="{{formData.bookCode}}"
+            required
+          >
+        </div>
+
+        <!-- Tên sách -->
+        <div class="form-group">
+          <label for="title" class="form-label">Tên sách <span class="required">*</span></label>
+          <input 
+            type="text" 
+            id="title" 
+            name="title" 
+            class="form-control" 
+            placeholder="VD: Điện toán Đám mây Căn bản" 
+            value="{{formData.title}}"
+            required
+          >
+        </div>
+
+        <!-- Tác giả & Thể loại (Nhập tay tự do) -->
+        <div class="form-row">
+          <div class="form-group col-half">
+            <label for="author" class="form-label">Tác giả <span class="required">*</span></label>
+            <input 
+              type="text" 
+              id="author" 
+              name="author" 
+              class="form-control" 
+              placeholder="VD: Hoàng Lê An" 
+              value="{{formData.author}}"
+              required
+            >
+          </div>
+          <div class="form-group col-half">
+            <label for="category" class="form-label">Thể loại</label>
+            <input 
+              type="text" 
+              id="category" 
+              name="category" 
+              class="form-control" 
+              placeholder="Nhập thể loại..." 
+              value="{{formData.category}}"
+            >
+          </div>
+        </div>
+
+        <!-- Giá gốc & Tính toán động -->
+        <div class="form-group">
+          <label for="originalPrice" class="form-label">Giá gốc (VNĐ) <span class="required">*</span></label>
+          <input 
+            type="number" 
+            id="originalPrice" 
+            name="originalPrice" 
+            class="form-control" 
+            placeholder="VD: 150000" 
+            min="0" 
+            step="1000"
+            value="{{formData.originalPrice}}"
+            required
+          >
+        </div>
+
+        <!-- Box xem trước tính toán VAT -->
+        <div class="vat-calculator-box">
+          <div class="vat-calc-title">Tính Toán VAT Trước Khi Lưu (VAT {{student.vatRate}}%):</div>
+          <div class="vat-calc-details">
+            <div class="vat-calc-item">
+              <span>Giá gốc:</span>
+              <span id="previewOriginal">0 đ</span>
+            </div>
+            <div class="vat-calc-item">
+              <span>+ VAT ({{student.vatRate}}%):</span>
+              <span id="previewVat">0 đ</span>
+            </div>
+            <div class="vat-calc-divider"></div>
+            <div class="vat-calc-item total">
+              <span>Giá sau thuế (Lưu DB):</span>
+              <span id="previewFinal">0 đ</span>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="btnSubmit">
+          Thêm Sách
+        </button>
+      </form>
+    </div>
+
+    <!-- Cột 2: Bảng Danh Sách Sách -->
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">Danh Sách Sách</h2>
+      </div>
+
+      <div class="table-responsive">
+        {{#if books.length}}
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Mã sách</th>
+                <th>Tên sách</th>
+                <th>Tác giả</th>
+                <th>Thể loại</th>
+                <th>Giá gốc</th>
+                <th>Thuế ({{student.vatRate}}%)</th>
+                <th>Giá sau thuế</th>
+                <th>Ngày nhập</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each books}}
+                <tr>
+                  <td><code>{{this.bookCode}}</code></td>
+                  <td><strong>{{this.title}}</strong></td>
+                  <td>{{this.author}}</td>
+                  <td>{{this.category}}</td>
+                  <td>{{formatCurrency this.originalPrice}}</td>
+                  <td>+{{formatCurrency this.vatAmount}}</td>
+                  <td><strong>{{formatCurrency this.finalPrice}}</strong></td>
+                  <td class="text-date">{{formatDate this.createdAt}}</td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        {{else}}
+          <div class="empty-state">
+            <p>Chưa có dữ liệu sách trong database DB_23IT003.</p>
+          </div>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const priceInput = document.getElementById('originalPrice');
+    const previewOriginal = document.getElementById('previewOriginal');
+    const previewVat = document.getElementById('previewVat');
+    const previewFinal = document.getElementById('previewFinal');
+    const vatRate = {{student.vatRate}};
+
+    function updatePreview() {
+      const price = parseFloat(priceInput.value) || 0;
+      const vat = Math.round((price * vatRate) / 100);
+      const finalPrice = price + vat;
+
+      previewOriginal.textContent = price.toLocaleString('vi-VN') + ' đ';
+      previewVat.textContent = vat.toLocaleString('vi-VN') + ' đ';
+      previewFinal.textContent = finalPrice.toLocaleString('vi-VN') + ' đ';
+    }
+
+    priceInput.addEventListener('input', updatePreview);
+    updatePreview();
+  });
+</script>
